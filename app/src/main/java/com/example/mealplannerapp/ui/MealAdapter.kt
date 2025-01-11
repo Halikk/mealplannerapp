@@ -35,7 +35,7 @@ class MealAdapter(
         fun bind(meal: Meal) {
             binding.tvMealTitle.text = meal.title
             binding.tvMealCalories.text = "Calories: ${meal.calories}"
-            binding.ivMeal.load(meal.image)
+            binding.ivMealImage.load(meal.image)
             binding.root.setOnClickListener {
                 onMealClick(meal)
             }

@@ -44,7 +44,7 @@ class MealDetailActivity : AppCompatActivity() {
             // API'den yemek detaylarını çek
             fetchMealDetails(mealId)
         } else {
-            Toast.makeText(this, "Yemek detayları yüklenemedi!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Meal details are missing.", Toast.LENGTH_SHORT).show()
             finish()
         }
 
@@ -87,7 +87,7 @@ class MealDetailActivity : AppCompatActivity() {
 
                     )
                 } else {
-                    Toast.makeText(this@MealDetailActivity, "Yemek detayları alınamadı.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MealDetailActivity, "Meal details are missing.", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
