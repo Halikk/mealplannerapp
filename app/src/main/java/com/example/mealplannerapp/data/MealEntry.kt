@@ -2,6 +2,7 @@ package com.example.mealplannerapp.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "meal_entries")
 data class MealEntry(
@@ -14,4 +15,4 @@ data class MealEntry(
     val calories: Double,
     val userId: String
 
-)
+): Serializable

@@ -66,6 +66,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0") // Eğer Compose kullanıyorsanız
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation ("com.google.android.material:material:1.2.0")
     // Diğer bağımlılıklar..
     val roomVersion = "2.5.2"
 

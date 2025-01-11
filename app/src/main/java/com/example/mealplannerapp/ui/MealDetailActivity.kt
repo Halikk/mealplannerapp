@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import coil.load
+import com.example.mealplannerapp.data.MealEntry
 import com.example.mealplannerapp.data.MealPlannerDatabase
 import com.example.mealplannerapp.viewmodel.MealStorageViewModel
 import com.example.mealplannerapp.databinding.ActivityMealDetailBinding
@@ -34,15 +35,16 @@ class MealDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Intent'ten gelen Meal ID'yi al
-        val mealId = intent.getIntExtra("MEAL_ID", -1)
+        val meal = intent.getSerializableExtra("MEAL_ENTRY") as? MealEntry
         val fromSavedMeals = intent.getBooleanExtra("FROM_SAVED_MEALS", false)
         if (fromSavedMeals) {
             binding.btnSaveMeal.visibility = View.GONE
+
         }
 
-        if (mealId != -1) {
+        if (meal != null) {
             // API'den yemek detaylarını çek
-            fetchMealDetails(mealId)
+            fetchMealDetails(meal)
         } else {
             Toast.makeText(this, "Meal details are missing.", Toast.LENGTH_SHORT).show()
             finish()
@@ -69,29 +71,29 @@ class MealDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchMealDetails(mealId: Int) {
+    private fun fetchMealDetails(mealEntry: MealEntry) {
         lifecycleScope.launch {
             try {
                 val response = RetrofitClient.api.getMealDetails(
-                    recipeId = mealId,
+                    recipeId = mealEntry.mealApiId,
                     apiKey = "23669ef999af4ddba191f61b71f6f9f7"
                 )
+
                 if (response.isSuccessful && response.body() != null) {
                     val mealDetails = response.body()!!
 
-
+                    // Detayları göster
                     displayMealDetails(
                         title = mealDetails.title,
                         image = mealDetails.image,
                         instructions = mealDetails.instructions
-
                     )
                 } else {
                     Toast.makeText(this@MealDetailActivity, "Meal details are missing.", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this@MealDetailActivity, "Bir hata oluştu.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MealDetailActivity, "An error occurred.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -140,5 +142,7 @@ class MealDetailActivity : AppCompatActivity() {
         ).toString()
         binding.tvInstructions.text = cleanInstructions.ifBlank { "No instructions available." }
 
+        val calories = intent.getDoubleExtra("MEAL_CALORIES", 0.0)
+        binding.tvCalories.text = "Calories: $calories"
     }
 }

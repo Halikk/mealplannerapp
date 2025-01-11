@@ -33,5 +33,6 @@ data class RecipeDetails(
     val id: Int,
     val title: String,
     val image: String,
-    val instructions: String
+    val instructions: String,
+    val nutrition: NutritionInfo?
 )

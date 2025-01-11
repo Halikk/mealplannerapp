@@ -95,6 +95,7 @@ class SavedMealsActivity : AppCompatActivity() {
                 )
                 if (response.isSuccessful && response.body() != null) {
                     val mealDetails = response.body()!!
+                    val calories = intent.getDoubleExtra("MEAL_CALORIES", 0.0)
 
                     // MealEntry nesnesi oluştur
                     val mealEntry = MealEntry(
@@ -103,7 +104,7 @@ class SavedMealsActivity : AppCompatActivity() {
                         title = mealDetails.title,
                         mealApiId = mealApiId,
                         imageUrl = mealDetails.image,
-                        calories = 0.0, // Eğer kalori bilgisi mealDetails içinde yoksa
+                        calories = calories, // Eğer kalori bilgisi mealDetails içinde yoksa
                         userId = FirebaseAuth.getInstance().currentUser?.uid ?: "Unknown"
                     )
 
@@ -128,7 +129,7 @@ class SavedMealsActivity : AppCompatActivity() {
 
     private fun navigateToMealDetail(mealEntry: MealEntry) {
         val intent = Intent(this, MealDetailActivity::class.java).apply {
-            putExtra("MEAL_ID", mealEntry.mealApiId)
+            putExtra("MEAL_ENTRY", mealEntry)
             putExtra("FROM_SAVED_MEALS", true) // Saved Meals'tan gelindiğini belirt
         }
         startActivity(intent)
