@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.example.mealplannerapp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Internet permission for API calls -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.MealPlannerApp">
+
+        <!-- Splash Screen -->
+        <activity
+            android:name=".ui.SplashActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.SavedMealsActivity" />
+        <!-- Other Activities -->
+        <activity android:name=".ui.RegisterActivity" />
+        <activity android:name=".ui.LoginActivity" />
+        <activity
+            android:name=".ui.PersonalDetailsActivity" />
+        <activity
+            android:name=".ui.MealPlanActivity" />
+        <activity
+            android:name=".ui.MealDetailActivity" />
+        <activity android:name=".ui.DaysActivity" />
+    </application>
+</manifest>
