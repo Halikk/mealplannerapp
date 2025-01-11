@@ -58,6 +58,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
     implementation(libs.androidx.foundation.layout)
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.junit.ktx)
+    androidTestImplementation(libs.junit.junit)
     debugImplementation("androidx.compose.ui:ui-tooling:1.5.3")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("io.coil-kt:coil:2.4.0") // Coil kütüphanes
