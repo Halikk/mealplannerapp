@@ -18,7 +18,7 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Simple delay before moving to LoginActivity
+        // Login öncesi gecikme
         GlobalScope.launch {
             delay(2000)
             withContext(Dispatchers.Main) {

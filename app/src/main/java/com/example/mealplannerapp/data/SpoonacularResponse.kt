@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName
 data class SpoonacularResponse(
     @SerializedName("results")
     val results: List<Recipe>? = null,
-
-    // If using the random endpoint:
     @SerializedName("recipes")
     val randomRecipes: List<Recipe>? = null
 )
