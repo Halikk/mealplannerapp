@@ -11,7 +11,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import coil.load
-import com.example.mealplannerapp.data.MealEntry
 import com.example.mealplannerapp.data.MealPlannerDatabase
 import com.example.mealplannerapp.viewmodel.MealStorageViewModel
 import com.example.mealplannerapp.databinding.ActivityMealDetailBinding
@@ -35,16 +34,16 @@ class MealDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Intent'ten gelen Meal ID'yi al
-        val meal = intent.getSerializableExtra("MEAL_ENTRY") as? MealEntry
+        val mealApiId = intent.getIntExtra("MEAL_ID", -1)
         val fromSavedMeals = intent.getBooleanExtra("FROM_SAVED_MEALS", false)
         if (fromSavedMeals) {
             binding.btnSaveMeal.visibility = View.GONE
-
+            binding.tvCalories.visibility = View.GONE
         }
 
-        if (meal != null) {
+        if (mealApiId != -1) {
             // API'den yemek detaylarını çek
-            fetchMealDetails(meal)
+            fetchMealDetails(mealApiId)
         } else {
             Toast.makeText(this, "Meal details are missing.", Toast.LENGTH_SHORT).show()
             finish()
@@ -55,7 +54,7 @@ class MealDetailActivity : AppCompatActivity() {
             val mealTitle = binding.tvTitle.text.toString()
             val mealImage = intent.getStringExtra("MEAL_IMAGE") ?: ""
             val mealCalories = intent.getDoubleExtra("MEAL_CALORIES", 0.0)
-            val mealApiId = intent.getIntExtra("MEAL_ID", -1) // mealApiId burada alınıyor
+            @Suppress("NAME_SHADOWING") val mealApiId = intent.getIntExtra("MEAL_ID", -1) // mealApiId burada alınıyor
             val currentUser = FirebaseAuth.getInstance().currentUser
 
             if (currentUser != null && mealApiId != -1) {
@@ -71,11 +70,11 @@ class MealDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchMealDetails(mealEntry: MealEntry) {
+    private fun fetchMealDetails(mealApiId: Int) {
         lifecycleScope.launch {
             try {
                 val response = RetrofitClient.api.getMealDetails(
-                    recipeId = mealEntry.mealApiId,
+                    recipeId = mealApiId,
                     apiKey = "23669ef999af4ddba191f61b71f6f9f7"
                 )
 
